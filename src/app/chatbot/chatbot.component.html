@@ -1,0 +1,31 @@
+<div class="chatbot-container flex flex-col h-screen bg-gray-100 p-4">
+  <div class="messages flex-1 overflow-y-auto mb-4">
+    <div *ngFor="let message of messages" class="mb-2">
+      <div *ngIf="message.startsWith('You:')" class="text-right">
+        <span class="inline-block bg-blue-500 text-white rounded-lg p-2">
+          {{ message }}
+        </span>
+      </div>
+      <div *ngIf="message.startsWith('Bot:')" class="text-left">
+        <span class="inline-block bg-gray-300 text-gray-800 rounded-lg p-2" [innerHTML]="message | slice:5">
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="flex">
+    <select class="mr-2 border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-blue-500" [(ngModel)]="selectedDtc">
+      <option *ngFor="let dtc of dtcs" [value]="dtc">{{ dtc }}</option>
+    </select>
+    <input
+      type="text"
+      placeholder="Type your message..."
+      #messageInput
+      (keyup.enter)="sendMessage(messageInput.value); messageInput.value=''"
+      class="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-blue-500"
+    />
+    <button (click)="sendMessage(messageInput.value); messageInput.value=''"
+      class="ml-2 bg-blue-500 text-white rounded-lg p-2 focus:outline-none">
+      Send
+    </button>
+  </div>
+</div>
